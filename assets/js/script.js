@@ -7,27 +7,30 @@ var saveButtonElements= document.getElementsByClassName("saveBtn");
 for (let i=0; i<saveButtonElements.length; i++){
     let button = saveButtonElements[i];
     button.addEventListener("click",function(e){
-        var clickTextContext=button.parentElement.previousElementSibling.closest(".description").textContent;
-        var timeBlockId=button.parentElement.firstElementChild.getAttribute("id").split("-")[1];
+        var clickTextContext=button.previousElementSibling.value;
+        var timeBlockId=button.previousElementSibling.getAttribute("id").split("-")[1];
         localStorage.setItem(timeBlockId,clickTextContext);
     });
 }
 
 //for present past and future tasks
 let formatTimeBlocks=function(){
-    let currentHour=moment().format();
+    let currentHour=moment().format("HH");
     let currentHourFound= false;
-    for(let i=0; i<timeBlocks.length;[i]){
-
-        if (timeBlocks.eq(i).find(".hour").text()===currentHour){
-            timeBlocks.eq(i).find(".event").addClass("present");
+    for(let i=0; i<timeBlocks.length; i++){
+        if (timeBlocks.eq(i).find(".hour").attr("id")===currentHour){
+            timeBlocks.eq(i).find(".description").addClass("present");
             currentHourFound=true;
+            console.log("a");
         }
-        else if (currentHourFound){
-            timeBlocks.eq(i).find(".event").addClass("future");
+        else if (timeBlocks.eq(i).find(".hour").attr("id")>currentHour){
+            timeBlocks.eq(i).find(".description").addClass("future");
+            console.log("b")
+
         }
         else {
-            timeBlocks.eq(i).find(".event").addClass("past");
+            timeBlocks.eq(i).find(".description").addClass("past");
+            console.log("c");
         }
     }
 }
@@ -69,3 +72,4 @@ let timeBlockSeventeen = document.getElementById('textArea-17');
 timeBlockSeventeen.textContent=localStorage.getItem("17");
 
 saveTasksToLocalStorage();
+formatTimeBlocks();
