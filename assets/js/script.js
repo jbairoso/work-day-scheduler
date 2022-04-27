@@ -15,22 +15,21 @@ for (let i=0; i<saveButtonElements.length; i++){
 
 //for present past and future tasks
 let formatTimeBlocks=function(){
-    let currentHour=moment().format();
+    let currentHour=moment().format("HH");
     let currentHourFound= false;
     for(let i=0; i<timeBlocks.length; i++){
-        console.log(currentHour);
-        if (timeBlocks.eq(i).find(".hour").text()===currentHour){
-            timeBlocks.eq(i).find(".event").addClass("present");
+        if (timeBlocks.eq(i).find(".hour").attr("id")===currentHour){
+            timeBlocks.eq(i).find(".description").addClass("present");
             currentHourFound=true;
             console.log("a");
         }
-        else if (currentHourFound){
-            timeBlocks.eq(i).find(".event").addClass("future");
+        else if (timeBlocks.eq(i).find(".hour").attr("id")>currentHour){
+            timeBlocks.eq(i).find(".description").addClass("future");
             console.log("b")
 
         }
         else {
-            timeBlocks.eq(i).find(".event").addClass("past");
+            timeBlocks.eq(i).find(".description").addClass("past");
             console.log("c");
         }
     }
